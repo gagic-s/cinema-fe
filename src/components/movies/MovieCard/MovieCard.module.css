@@ -1,0 +1,20 @@
+.movieCardContainer {
+  width: 22%;
+  min-width: 320px;
+  padding: 0.5em;
+  margin: 1em;
+  border-radius: 10px;
+  color: rgba(240, 237, 237, 0.87);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  background-color: rgba(205, 202, 202, 0.5);
+}
+
+img {
+  width: 200px;
+  height: 300px;
+}
+
+h2 {
+  text-align: left;
+  padding-top: 10px;
+}
