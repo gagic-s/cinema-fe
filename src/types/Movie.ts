@@ -1,4 +1,3 @@
-import Genre from "./Genre";
 import Screening from "./Screenings";
 
 interface Movie {
@@ -9,8 +8,8 @@ interface Movie {
   createdAt: string;
   updatedAt: string;
   duration: number;
-  Genres: Genre[];
-  Screenings: Screening[];
+  genres: string[];
+  screenings: Screening[];
 }
 
 export default Movie;

@@ -9,8 +9,6 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
-  const genreNames = movie.Genres?.map((genre) => genre.name) || [];
-
   return (
     <div className={styles.movieCardContainer}>
       <img
@@ -18,10 +16,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         alt={movie.name}
       />
       <h2>{movie.name}</h2>
-      {genreNames.length > 0 && <p>Genres: {genreNames.join(", ")}</p>}
-      {movie.Screenings && movie.Screenings.length > 0 ? (
+      {movie.genres.length > 0 && <p>Genres: {movie.genres.join(", ")}</p>}
+      {movie.screenings && movie.screenings.length > 0 ? (
         <ul>
-          {movie.Screenings.map((screening: Screening) => (
+          {movie.screenings.map((screening: Screening) => (
             <ScreeningTile screening={screening} />
           ))}
         </ul>
