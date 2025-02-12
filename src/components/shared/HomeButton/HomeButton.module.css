@@ -1,0 +1,8 @@
+.homeButton {
+  width: 100px;
+  height: 100px;
+  background-image: url("../../../assets/home-icon.webp");
+  background-size: cover;
+  border-radius: 50%;
+  margin: 10px;
+}

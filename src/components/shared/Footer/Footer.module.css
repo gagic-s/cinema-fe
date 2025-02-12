@@ -1,0 +1,35 @@
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.logo {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.links a,
+.socials a {
+  color: #bbb;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.links a:hover,
+.socials a:hover {
+  color: #fff;
+}
+
+.copyright {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+}
