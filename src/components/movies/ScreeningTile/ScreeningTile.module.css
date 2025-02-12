@@ -14,3 +14,8 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+strong {
+  font-weight: bolder;
+  color: rgb(236, 39, 39);
+}

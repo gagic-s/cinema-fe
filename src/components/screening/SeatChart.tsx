@@ -40,6 +40,8 @@ const SeatChart: React.FC<SeatChartProps> = ({
 
   return (
     <div className={styles.seatChart}>
+      <div className={styles.screen}> screen</div>
+
       {Array.from({ length: rows }).map((_, row) => (
         <div key={row} className={styles.row}>
           {Array.from({ length: cols }).map((_, col) => {

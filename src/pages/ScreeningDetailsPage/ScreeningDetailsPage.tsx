@@ -35,7 +35,11 @@ const ScreeningDetailsPage = () => {
 
   return (
     <div className={styles.container}>
-      <h2>{screening?.movie?.name}</h2>
+      <h2 className={styles.title}>
+        {screening?.movie?.name} -
+        {screening ? dateFormatter(screening.screeningDate) : ""} -
+        {screening ? screening.screeningTime.slice(0, 5) : ""}
+      </h2>
 
       <div className={styles.content}>
         <div className={styles.leftSection}>
@@ -46,12 +50,6 @@ const ScreeningDetailsPage = () => {
           />
         </div>
         <div className={styles.rightSection}>
-          {screening?.screeningDate && screening?.screeningTime && (
-            <p>
-              {dateFormatter(screening.screeningDate)} -{" "}
-              {screening.screeningTime.slice(0, 5)}
-            </p>
-          )}
           {screening?.screeningRows && screening?.screeningColumns && (
             <SeatChart
               rows={screening.screeningRows}

@@ -4,7 +4,13 @@
   align-items: left;
   gap: 1rem;
   padding: 1rem;
-  color: beige;
+  color: rgba(51, 50, 50, 0.87);
+}
+.title {
+  padding-left: 1em;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 .content {
@@ -24,7 +30,7 @@
 
 .poster {
   width: 100%;
-  max-width: 230px;
+  max-width: 260px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -33,18 +39,10 @@
   flex: 2;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  border: 1px solid rgb(163, 161, 161);
-  border-radius: 5px;
-}
-
-h2 {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
 }
 
 .price {
   text-align: left;
+  padding-left: 1em;
 }

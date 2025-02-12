@@ -1,7 +1,6 @@
 .seatChart {
   display: grid;
   gap: 8px;
-  padding: 16px;
   border-radius: 8px;
   width: fit-content;
 }
@@ -23,11 +22,11 @@
 }
 
 .available {
-  background-color: #8de6ad;
+  background-color: #333;
 }
 
 .available:hover {
-  background-color: #16a34a;
+  background-color: #fff;
 }
 
 .taken {
@@ -36,5 +35,13 @@
 }
 
 .selected {
-  background-color: #607ca8;
+  background-color: #a17006;
+}
+
+.screen {
+  color: #fff;
+  height: 2em;
+  margin-bottom: 1em;
+  background-color: #333;
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
 }
