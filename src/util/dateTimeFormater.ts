@@ -3,8 +3,8 @@ export const dateFormatter = (
   locale: string = "en-US"
 ) => {
   return new Date(date).toLocaleDateString(locale, {
-    year: "numeric",
-    month: "long",
+    weekday: "long",
+    month: "short",
     day: "2-digit",
   });
 };

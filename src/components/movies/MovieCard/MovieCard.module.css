@@ -34,6 +34,10 @@ h2 {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
+.genreTile:hover {
+  background-color: #fff;
+}
+
 ul {
   margin-top: 20px;
 }

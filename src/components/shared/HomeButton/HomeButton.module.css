@@ -1,8 +1,13 @@
 .homeButton {
-  width: 100px;
+  width: 200px;
   height: 100px;
-  background-image: url("../../../assets/home-icon.webp");
+  background-image: url("../../../assets/cinema-logo.svg");
   background-size: cover;
-  border-radius: 50%;
+  overflow: visible;
   margin: 10px;
+  transition: transform 0.1s ease;
+}
+
+.homeButton:hover {
+  transform: scale(1.05);
 }

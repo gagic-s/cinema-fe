@@ -10,6 +10,11 @@
   color: rgba(52, 51, 51, 0.87);
 }
 
+.screeningTileContainer:hover {
+  background-color: #333;
+  color: #fff;
+}
+
 a {
   text-decoration: none;
   color: inherit;
