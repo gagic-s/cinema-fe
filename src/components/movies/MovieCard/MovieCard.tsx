@@ -30,11 +30,11 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
       {movie.screenings && movie.screenings.length > 0 ? (
         <ul>
           {movie.screenings.map((screening: Screening) => (
-            <ScreeningTile screening={screening} />
+            <ScreeningTile key={screening.screening_id} screening={screening} />
           ))}
         </ul>
       ) : (
-        <p>No screenings available</p>
+        <p>No screenings available :( </p>
       )}
     </div>
   );

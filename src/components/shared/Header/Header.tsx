@@ -4,11 +4,11 @@ import UserInfo from "../UserInfo/UserInfo";
 import style from "./Header.module.css";
 const Header = () => {
   return (
-    <div className={style.headerContainer}>
+    <header className={style.headerContainer}>
       <HomeButton />
       <SearchBar />
       <UserInfo />
-    </div>
+    </header>
   );
 };
 
