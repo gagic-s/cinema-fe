@@ -4,17 +4,36 @@
   padding: 0.5em;
   margin: 1em;
   border-radius: 10px;
-  color: rgba(240, 237, 237, 0.87);
+  color: rgba(52, 51, 51, 0.87);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   background-color: rgba(205, 202, 202, 0.5);
 }
 
 img {
-  width: 200px;
+  width: 320px;
+  height: 400px;
+}
+
+.poster {
+  width: 100%;
   height: 300px;
+  overflow: hidden;
+  border-radius: 5px;
 }
 
 h2 {
   text-align: left;
   padding-top: 10px;
+}
+
+.genreTile {
+  margin: 0.5em;
+  padding: 0.5em;
+  border-radius: 5px;
+  background-color: rgb(133, 99, 99);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+ul {
+  margin-top: 20px;
 }

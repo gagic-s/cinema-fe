@@ -11,12 +11,22 @@ interface MovieCardProps {
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   return (
     <div className={styles.movieCardContainer}>
-      <img
-        src={image} //TODO: add image when ready on BE
-        alt={movie.name}
-      />
+      <div className={styles.poster}>
+        <img
+          src={image} //TODO: add image when ready on BE
+          alt={movie.name}
+        />
+      </div>
+
       <h2>{movie.name}</h2>
-      {movie.genres.length > 0 && <p>Genres: {movie.genres.join(", ")}</p>}
+      {movie.genres.length > 0 &&
+        movie.genres.map((genre) => (
+          <strong className={styles.genreTile} key={genre}>
+            {" "}
+            {genre}{" "}
+          </strong>
+        ))}
+
       {movie.screenings && movie.screenings.length > 0 ? (
         <ul>
           {movie.screenings.map((screening: Screening) => (
