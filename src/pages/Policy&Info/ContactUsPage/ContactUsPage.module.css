@@ -1,0 +1,111 @@
+.contactUsPage {
+  padding: 20px;
+}
+
+.contactHeader h1 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.contactFormSection {
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 4px 4px 4px 4px rgba(0.1, 0.1, 0.1, 0.1);
+  border-radius: 8px;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+input,
+textarea {
+  width: 90%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.submitButton {
+  padding: 10px;
+  font-size: 1.1em;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #555;
+}
+
+.successMessage {
+  text-align: center;
+  background-color: #e8f8e8;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #d3f4d3;
+}
+
+.successMessage h2 {
+  color: green;
+}
+
+.successMessage p {
+  color: #333;
+}
+
+.contactInfo {
+  padding: 20px;
+}
+
+.contactInfo h1 {
+  font-size: 2.8em;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.contactInfo h2 {
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.contactInfo ul {
+  list-style: none;
+  padding: 0;
+  font-size: 1.1em;
+  color: #333;
+}
+
+.contactInfo li {
+  margin-bottom: 10px;
+}
+
+.contactInfo a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.contactInfo a:hover {
+  text-decoration: underline;
+}

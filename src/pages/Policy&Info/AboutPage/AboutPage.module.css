@@ -1,0 +1,26 @@
+.aboutPage {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.aboutHeader h1 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.aboutContent {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.aboutContent h2 {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.aboutContent p {
+  font-size: 1em;
+  line-height: 1.6;
+}
