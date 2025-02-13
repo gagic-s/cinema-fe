@@ -1,3 +1,9 @@
+.seatChartContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .seatChart {
   display: grid;
   gap: 8px;
@@ -44,4 +50,12 @@
   margin-bottom: 1em;
   background-color: #333;
   clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  margin: 5em 3rem;
+  align-items: center;
+  font-size: small;
 }
