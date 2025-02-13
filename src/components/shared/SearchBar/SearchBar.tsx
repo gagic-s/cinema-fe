@@ -2,17 +2,22 @@
 import { useState } from "react";
 import style from "./SearchBar.module.css";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SearchBar = ({ onSearch }: any) => {
-  const [query, setQuery] = useState("");
+interface SearchBarProps {
+  onSearch: (query: string) => void;
+}
 
-  const handleInputChange = (e: any) => {
-    setQuery(e.target.value);
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setInputValue(value);
+    onSearch(value); // Update the search query in context
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    onSearch(query);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onSearch(inputValue); // Ensure search is triggered on submit
   };
 
   return (
@@ -20,7 +25,7 @@ const SearchBar = ({ onSearch }: any) => {
       <input
         type="text"
         placeholder="Search..."
-        value={query}
+        value={inputValue}
         onChange={handleInputChange}
         className={style.searchInput}
       />

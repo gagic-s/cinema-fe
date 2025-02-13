@@ -1,11 +1,13 @@
-import Movie from "../../../types/Movie";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import Screening from "../../../types/Screenings";
 import image from "../../../assets/movie.jpg";
 import styles from "./MovieCard.module.css";
 import ScreeningTile from "../ScreeningTile/ScreeningTile";
 
 interface MovieCardProps {
-  movie: Movie;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  movie: any;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
@@ -20,7 +22,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
 
       <h2>{movie.name}</h2>
       {movie.genres.length > 0 &&
-        movie.genres.map((genre) => (
+        movie.genres.map((genre: any) => (
           <strong className={styles.genreTile} key={genre}>
             {" "}
             {genre}{" "}
@@ -30,7 +32,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
       {movie.screenings && movie.screenings.length > 0 ? (
         <ul>
           {movie.screenings.map((screening: Screening) => (
-            <ScreeningTile key={screening.screening_id} screening={screening} />
+            <ScreeningTile key={screening.id} screening={screening} />
           ))}
         </ul>
       ) : (
