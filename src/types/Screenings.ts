@@ -1,5 +1,5 @@
 interface Screening {
-  screening_id: string;
+  id?: string;
   screeningDate: string;
   screeningTime: string;
   ticketPrice: string;

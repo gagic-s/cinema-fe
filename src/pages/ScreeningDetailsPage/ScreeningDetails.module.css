@@ -7,10 +7,11 @@
   color: rgba(51, 50, 50, 0.87);
 }
 .title {
-  padding-left: 1em;
+  padding: 1em;
   font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  text-align: left;
 }
 
 .content {
@@ -45,4 +46,12 @@
 .price {
   text-align: left;
   padding-left: 1em;
+}
+
+.purchaseContainer {
+  padding: 1rem;
+  width: 260px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
-import Screening from "../../../types/Screenings";
 import { dateFormatter } from "../../../util/dateTimeFormater";
 import styles from "./ScreeningTile.module.css";
 
 interface ScreeningTileProps {
-  screening: Screening;
+  screening: any;
 }
 
 const ScreeningTile: React.FC<ScreeningTileProps> = ({ screening }) => {
