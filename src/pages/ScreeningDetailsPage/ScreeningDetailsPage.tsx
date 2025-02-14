@@ -9,12 +9,15 @@ import { dateFormatter } from "../../util/dateTimeFormater";
 import image from "../../assets/movie.jpg";
 import { createReservation } from "../../services/reservation/reservationService";
 import Button from "../../components/shared/Button/Button";
+import Modal from "../../components/shared/Modal/Modal";
 
 type SeatStatus = "available" | "taken" | "selected";
 const ScreeningDetailsPage = () => {
   const { id } = useParams();
   const [screening, setScreening] = useState<Screening>();
   const [loading, setLoading] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const [selectedSeats, setSelectedSeats] = useState<Set<string>>(new Set());
 
   const takenSeats = new Set(screening?.tickets || []);
@@ -67,12 +70,16 @@ const ScreeningDetailsPage = () => {
 
   const handleBuyClick = () => {
     if (!screening?.id) return;
-
+    setModalOpen(true);
     // Convert the Set to an array of Tickets
     const ticketsArray = Array.from(selectedSeats).map((seat) => {
       const [row, column] = seat.split("-").map(Number); // Split and convert to numbers
       return { ticket_row: row, ticket_column: column };
     });
+    if (!ticketsArray.length) {
+      setModalOpen(true);
+      return;
+    }
 
     const newReservation = {
       screening_id: screening?.id,
@@ -80,9 +87,45 @@ const ScreeningDetailsPage = () => {
       totalPrice: totalPrice,
       ticketsData: ticketsArray,
     };
-
+    console.log(newReservation);
     createReservation(newReservation);
   };
+
+  const handleConfirm = () => {
+    setModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setModalOpen(false);
+  };
+
+  const modalContentConfirm = (
+    <p>
+      <h3>Are you sure you want to purchase these tickets? </h3>
+      <p> Event: {screening?.movie?.name} </p>
+
+      <p> Date: {dateFormatter(screening?.screeningDate || "")} </p>
+      <p>Time: {screening?.screeningTime.slice(0, 5)}</p>
+      <p> Quantity: {selectedSeats.size} </p>
+      <p> Total Price: {totalPrice} RSD</p>
+
+      <p>
+        Please confirm your purchase. Once confirmed, tickets cannot be refunded
+        or exchanged.
+      </p>
+    </p>
+  );
+
+  const modalContentError = (
+    <p>
+      <p>
+        You must select at least one seat before proceeding with the ticket
+        purchase.
+      </p>
+
+      <p>Please choose your preferred seat(s) to continue.</p>
+    </p>
+  );
 
   if (loading) return <div className={styles.container}>Loading</div>;
 
@@ -119,6 +162,15 @@ const ScreeningDetailsPage = () => {
         <strong>Total price: {totalPrice} RSD</strong>
         <Button onClick={handleBuyClick} text="Buy" />
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        title="Confirm Ticket Purchase"
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
+      >
+        {selectedSeats.size ? modalContentConfirm : modalContentError}
+      </Modal>
     </div>
   );
 };
