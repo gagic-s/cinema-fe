@@ -5,6 +5,7 @@
   gap: 1rem;
   padding: 1rem;
   color: rgba(51, 50, 50, 0.87);
+  min-height: 610px;
 }
 .title {
   padding: 1em;
