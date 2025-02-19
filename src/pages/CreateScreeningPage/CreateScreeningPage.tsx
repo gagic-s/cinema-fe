@@ -1,11 +1,18 @@
-import { Controller, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
-import style from "./CreateScreeningPage.module.css";
+import { format, setHours, setMinutes, setSeconds } from "date-fns";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { setHours, setMinutes, setSeconds, format } from "date-fns";
+import { Controller, useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import Modal from "../../components/shared/Modal/Modal";
+import { createScreening } from "../../services/screenings/screening-service";
+import style from "./CreateScreeningPage.module.css";
+import {
+  AddScreeningResponse,
+  AddScreeningRequest,
+} from "../../types/Screenings";
 
-type FormValues = {
+type ScreeningFormValues = {
   screeningDate: Date | null;
   screeningTime: Date | null;
   ticketPrice: number;
@@ -14,13 +21,15 @@ type FormValues = {
 };
 
 const CreateScreeningPage = () => {
-  const { id } = useParams();
+  const { id } = useParams<string>();
+  const [screeningCreated, setScreeningCreated] = useState<boolean>(false);
+  const [screenings, setScreenings] = useState<AddScreeningResponse[]>([]);
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<ScreeningFormValues>({
     defaultValues: {
       screeningTime: null,
       ticketPrice: 0,
@@ -30,21 +39,28 @@ const CreateScreeningPage = () => {
     },
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmit = async (data: any) => {
-    const date = format(new Date(data.screeningDate), "yyyy-MM-dd");
-    let time = new Date(data.screeningTime);
+  const onSubmit = async (data: ScreeningFormValues) => {
+    const date = format(new Date(data.screeningDate!), "yyyy-MM-dd");
+    let time = new Date(data.screeningTime!);
     time = setSeconds(setMinutes(setHours(time, 15), 0), 0);
     const formattedTime = format(time, "HH:mm:ss");
-    const newScreening = {
-      movie_id: id,
-      screeningDate: date,
-      screeningTime: formattedTime,
-      ticketPrice: data.ticketPrice,
-      screeningRows: data.screeningRows,
-      screeningColumns: data.screeningColumns,
-    };
-    console.log("newScreening", newScreening);
+
+    if (id) {
+      const newScreening: AddScreeningRequest = {
+        movie_id: id,
+        screeningDate: date,
+        screeningTime: formattedTime,
+        ticketPrice: data.ticketPrice,
+        screeningRows: data.screeningRows,
+        screeningColumns: data.screeningColumns,
+      };
+
+      const screening: AddScreeningResponse = await createScreening(
+        newScreening
+      );
+      setScreenings((prev) => [...prev, screening]);
+      setScreeningCreated(true);
+    }
   };
 
   return (
@@ -55,31 +71,32 @@ const CreateScreeningPage = () => {
         <Controller
           control={control}
           name="screeningDate"
-          rules={{ required: "Screening date is required" }} // Validation rules
+          rules={{ required: "Screening date is required" }}
           render={({ field }) => (
             <DatePicker
               placeholderText="Select Date"
-              onChange={(date) => field.onChange(date)} // Send value to hook form
-              selected={field.value} // Current value from hook form
-              dateFormat="yyyy/MM/dd" // Custom date format
+              onChange={(date) => field.onChange(date)}
+              selected={field.value}
+              dateFormat="yyyy/MM/dd"
             />
           )}
         />
         {errors.screeningDate && (
           <p style={{ color: "red" }}>{errors.screeningDate.message}</p>
         )}
+
         <label>Screening Time</label>
         <Controller
           control={control}
           name="screeningTime"
-          rules={{ required: "Screening time is required" }} // Validation rules
+          rules={{ required: "Screening time is required" }}
           render={({ field }) => (
             <DatePicker
               selected={field.value}
               onChange={(time) => field.onChange(time)}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={15} // 15-minute intervals
+              timeIntervals={15}
               timeCaption="Time"
               dateFormat="h:mm aa"
               placeholderText="Select Time"
@@ -87,8 +104,10 @@ const CreateScreeningPage = () => {
           )}
         />
         {errors.screeningTime && <p>This field is required</p>}
+
         <label>Ticket Price</label>
         <input {...register("ticketPrice")} defaultValue="test" />
+
         <label>Screening Rows</label>
         <input
           {...register("screeningRows", {
@@ -96,6 +115,7 @@ const CreateScreeningPage = () => {
           })}
         />
         {errors.screeningRows && <p>{errors?.screeningRows?.message || ""}</p>}
+
         <label>Screening Columns</label>
         <input
           {...register("screeningColumns", {
@@ -106,8 +126,22 @@ const CreateScreeningPage = () => {
         {errors.screeningColumns && (
           <p>{errors?.screeningColumns?.message || ""}</p>
         )}
+
         <input type="submit" />
       </form>
+      {screenings &&
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        screenings.map((screening: any) => (
+          <p> Screening on: {screening.screening_id}</p>
+        ))}
+      <Modal
+        isOpen={screeningCreated}
+        onClose={() => setScreeningCreated(false)}
+        onConfirm={() => setScreeningCreated(false)}
+        onCancel={() => setScreeningCreated(false)}
+      >
+        <p>Successfully created screening</p>
+      </Modal>
     </div>
   );
 };

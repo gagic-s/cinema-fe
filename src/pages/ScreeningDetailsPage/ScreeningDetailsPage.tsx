@@ -1,25 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useParams } from "react-router-dom";
-import styles from "./ScreeningDetails.module.css";
 import { useEffect, useMemo, useState } from "react";
-import Screening from "../../types/Screenings";
-import { fetchScreening } from "../../services/screenings/screeningService";
-import SeatChart from "../../components/screening/SeatChart/SeatChart";
-import { dateFormatter } from "../../util/dateTimeFormater";
+import { useParams } from "react-router-dom";
 import image from "../../assets/movie.jpg";
-import { createReservation } from "../../services/reservation/reservationService";
+import SeatChart from "../../components/screening/SeatChart/SeatChart";
 import Button from "../../components/shared/Button/Button";
 import Modal from "../../components/shared/Modal/Modal";
+import { createReservation } from "../../services/reservation/reservation-service";
+import { getOneScreening } from "../../services/screenings/screening-service";
+import { GetOneScreeningResponse } from "../../types/Screenings";
+import { dateFormatter } from "../../util/dateTimeFormatter";
+import styles from "./ScreeningDetails.module.css";
 
 type SeatStatus = "available" | "taken" | "selected";
 const ScreeningDetailsPage = () => {
   const { id } = useParams();
-  const [screening, setScreening] = useState<Screening>();
+  const [screening, setScreening] = useState<GetOneScreeningResponse>();
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const [selectedSeats, setSelectedSeats] = useState<Set<string>>(new Set());
-
   const takenSeats = new Set(screening?.tickets || []);
 
   const userEmail = "user@gmail.com"; //TODO: update when user service available
@@ -28,7 +27,7 @@ const ScreeningDetailsPage = () => {
     setLoading(true);
     try {
       if (!id) return;
-      const data = await fetchScreening(id);
+      const data = await getOneScreening(id);
       setScreening(data);
     } catch (error) {
       console.error("Failed to fetch screening", error);
@@ -69,7 +68,7 @@ const ScreeningDetailsPage = () => {
   };
 
   const handleBuyClick = () => {
-    if (!screening?.id) return;
+    if (!screening?.screening_id) return;
     setModalOpen(true);
     // Convert the Set to an array of Tickets
     const ticketsArray = Array.from(selectedSeats).map((seat) => {
@@ -82,7 +81,7 @@ const ScreeningDetailsPage = () => {
     }
 
     const newReservation = {
-      screening_id: screening?.id,
+      screening_id: screening?.screening_id,
       email: userEmail,
       totalPrice: totalPrice,
       ticketsData: ticketsArray,
