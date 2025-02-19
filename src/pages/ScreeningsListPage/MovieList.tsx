@@ -12,7 +12,7 @@ const MovieList = () => {
         <button className={styles.createMovieButton}>Add movie</button>
       </Link>
       <ul className={styles.movieListContainer}>
-        {filteredMovies.map((movie: any) => (
+        {filteredMovies.map((movie) => (
           <MovieCard key={movie.movie_id} movie={movie} />
         ))}
       </ul>

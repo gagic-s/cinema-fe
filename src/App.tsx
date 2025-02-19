@@ -24,7 +24,7 @@ function App() {
               <Route path="/" element={<MovieList />} />
               <Route path="/create-movie" element={<CreateMoviePage />} />
               <Route
-                path="/create-movie/:id/create-screening"
+                path="/:id/create-screening"
                 element={<CreateScreeningPage />}
               />
               <Route

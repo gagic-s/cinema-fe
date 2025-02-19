@@ -1,29 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { fetchMovies } from "../services/movies/movie-service";
-
-// Movie Model
-interface Screening {
-  screening_id: string;
-  date: string;
-  time: string;
-  ticketPrice: number;
-}
-
-interface Movie {
-  movie_id: string;
-  name: string;
-  originalName: string;
-  posterImage: string;
-  createdAt: string;
-  updatedAt: string;
-  duration: number;
-  genres: string[];
-  screenings: Screening[];
-}
+import { GetAllMoviesResponse } from "../types/Movie";
+import { getAllMovies } from "../services/movies/movie-service";
 
 interface MovieContextType {
-  movies: Movie[];
-  filteredMovies: Movie[];
+  movies: GetAllMoviesResponse[];
+  filteredMovies: GetAllMoviesResponse[];
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   loading: boolean;
@@ -34,8 +15,9 @@ const MovieContext = createContext<MovieContextType | undefined>(undefined);
 export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [filteredMovies, setFilteredMovies] = useState<Movie[]>(movies);
+  const [movies, setMovies] = useState<GetAllMoviesResponse[]>([]);
+  const [filteredMovies, setFilteredMovies] =
+    useState<GetAllMoviesResponse[]>(movies);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -44,7 +26,7 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({
     const getMovies = async () => {
       setLoading(true);
       try {
-        const data = await fetchMovies({});
+        const data = await getAllMovies({});
         setMovies(data);
       } catch (error) {
         console.error("Failed to fetch movies", error);

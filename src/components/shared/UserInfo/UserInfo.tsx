@@ -1,9 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import user from "../../../assets/user.jpg";
 import style from "./UserInfo.module.css";
 
-const UserInfo = ({ onLogout }: any) => {
+type UserInfoProps = {
+  onLogout: () => void;
+};
+const UserInfo: React.FC<UserInfoProps> = ({ onLogout }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {

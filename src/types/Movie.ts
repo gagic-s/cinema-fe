@@ -1,6 +1,6 @@
-import Screening from "./Screenings";
+import { Screening } from "./Screenings";
 
-interface Movie {
+export type Movie = {
   movie_id: string;
   name: string;
   originalName: string;
@@ -10,6 +10,37 @@ interface Movie {
   duration: number;
   genres: string[];
   screenings: Screening[];
-}
+};
 
-export default Movie;
+export type CreateMovieRequest = {
+  name: string;
+  originalName: string;
+  duration: number;
+  genreNames: string[];
+  poster: File | null;
+};
+
+export type CreateMovieResponse = {
+  movie_id: string;
+  name: string;
+  originalName: string;
+  duration: number;
+  posterImage: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type Genre = {
+  name: string;
+};
+export type GetAllMoviesResponse = {
+  createdAt: string;
+  duration: string;
+  movie_id: string;
+  name: string;
+  originalName: string;
+  posterImage: string;
+  updatedAt: string;
+  screenings: Screening[];
+  genres: Genre[];
+};

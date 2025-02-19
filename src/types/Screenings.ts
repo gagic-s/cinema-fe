@@ -1,5 +1,5 @@
-interface Screening {
-  id?: string;
+export type Screening = {
+  screening_id?: string;
   screeningDate: string;
   screeningTime: string;
   ticketPrice: string;
@@ -12,6 +12,46 @@ interface Screening {
     duration?: string;
   };
   tickets?: string[];
-}
+};
 
-export default Screening;
+export type AddScreeningRequest = {
+  movie_id: string;
+  screeningDate: string;
+  screeningTime: string;
+  ticketPrice: number;
+  screeningRows: number;
+  screeningColumns: number;
+};
+
+export type AddScreeningResponse = {
+  screening_id: string;
+  movie_id: string;
+  screeningDate: string;
+  screeningTime: string;
+  ticketPrice: number;
+  screeningRows: number;
+  screeningColumns: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type GetOneScreeningMovieResponse = {
+  movie_id: string;
+  name: string;
+  duration: number;
+  posterImage: string;
+};
+
+export type GetOneScreeningResponse = {
+  screening_id: string;
+  movie_id: string;
+  screeningDate: string;
+  screeningTime: string;
+  ticketPrice: number;
+  screeningRows: number;
+  screeningColumns: number;
+  createdAt: Date;
+  updatedAt: Date;
+  tickets: string[];
+  movie: GetOneScreeningMovieResponse;
+};
