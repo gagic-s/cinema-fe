@@ -1,42 +1,43 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Link } from "react-router-dom";
 
-import Screening from "../../../types/Screenings";
-import image from "../../../assets/movie.jpg";
-import styles from "./MovieCard.module.css";
+import { Screening } from "../../../types/Screenings";
+import Button from "../../shared/Button/Button";
 import ScreeningTile from "../ScreeningTile/ScreeningTile";
+import styles from "./MovieCard.module.css";
+import { GetAllMoviesResponse } from "../../../types/Movie";
 
-interface MovieCardProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  movie: any;
-}
+type MovieCardProps = {
+  movie: GetAllMoviesResponse;
+};
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   return (
     <div className={styles.movieCardContainer}>
       <div className={styles.poster}>
-        <img
-          src={image} //TODO: add image when ready on BE
-          alt={movie.name}
-        />
+        <img src={movie.posterImage} alt={movie.name} />
       </div>
 
       <h2>{movie.name}</h2>
       {movie.genres.length > 0 &&
-        movie.genres.map((genre: any) => (
-          <strong className={styles.genreTile} key={genre}>
-            {" "}
-            {genre}{" "}
+        movie.genres.map((genre) => (
+          <strong className={styles.genreTile} key={genre.name}>
+            {genre.name}
           </strong>
         ))}
 
       {movie.screenings && movie.screenings.length > 0 ? (
         <ul>
           {movie.screenings.map((screening: Screening) => (
-            <ScreeningTile key={screening.id} screening={screening} />
+            <ScreeningTile key={screening.screening_id} screening={screening} />
           ))}
         </ul>
       ) : (
-        <p>No screenings available :( </p>
+        <div className={styles.addScreeningContainer}>
+          <p>No screenings available :( </p>
+          <Link to={`/${movie.movie_id}/create-screening`}>
+            <Button variant="secondary" text={"Add screening"} />
+          </Link>
+        </div>
       )}
     </div>
   );

@@ -1,12 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  CreateMovieRequest,
+  CreateMovieResponse,
+  GetAllMoviesResponse,
+} from "../../types/Movie";
 import axiosInstance from "../api/axiosInstance";
 
-export const fetchMovies = async (params: {
+type GetMoviesParams = {
   movieName?: string;
   date?: string;
   limit?: number;
   offset?: number;
-}) => {
+};
+export const getAllMovies = async (
+  params: GetMoviesParams
+): Promise<GetAllMoviesResponse[]> => {
   try {
     const response = await axiosInstance.get("/movies", { params });
     return response.data;
@@ -16,12 +23,16 @@ export const fetchMovies = async (params: {
   }
 };
 
-export const createMovie = async (newMovie: any) => {
+export const createMovie = async (
+  newMovie: CreateMovieRequest
+): Promise<CreateMovieResponse> => {
   try {
-    const response = await axiosInstance.post("/movies", newMovie);
+    const response = await axiosInstance.post("/movies", newMovie, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data;
   } catch (error) {
-    console.error("Error adding movies:", error);
+    console.error("Error creating movies:", error);
     throw error;
   }
 };

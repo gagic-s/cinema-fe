@@ -1,21 +1,24 @@
-import { useForm } from "react-hook-form";
-import style from "./CreateMoviePage.module.css";
 import { useEffect, useState } from "react";
-import { fetchGenres } from "../../services/genres/retrieveGenres";
-import { createMovie } from "../../services/movies/movie-service";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import ImageUpload from "../../components/shared/ImageUpload/ImageUpload";
+import { getAllGenres } from "../../services/genres/genre-service";
+import { createMovie } from "../../services/movies/movie-service";
+import Genre from "../../types/Genre";
+import { CreateMovieRequest, CreateMovieResponse } from "../../types/Movie";
+import style from "./CreateMoviePage.module.css";
 
-// Explicitly define the form data structure
 type FormValues = {
   name: string;
   originalName: string;
   duration: number;
-  genres: string[]; // Genres as an array of strings
+  genres: string[];
 };
 
 const CreateMoviePage = () => {
   const [genres, setGenres] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const {
@@ -37,12 +40,11 @@ const CreateMoviePage = () => {
     const getGenres = async () => {
       setLoading(true);
       try {
-        const data = await fetchGenres();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const genreNames = data.map((genre: any) => genre.name);
+        const data = await getAllGenres();
+        const genreNames = data.map((genre: Genre) => genre.name);
         setGenres(genreNames);
       } catch (error) {
-        console.error("Failed to fetch movies", error);
+        console.error("Failed to fetch genres", error);
       } finally {
         setLoading(false);
       }
@@ -51,6 +53,7 @@ const CreateMoviePage = () => {
     getGenres();
   }, []);
 
+  // TODO: fix multiselect
   // Handle multiple selections
   const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOptions: string[] = Array.from(
@@ -60,16 +63,18 @@ const CreateMoviePage = () => {
     setValue("genres", selectedOptions);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmit = async (data: any) => {
-    const newMovie = {
+  const onSubmit = async (data: FormValues) => {
+    const newMovie: CreateMovieRequest = {
       name: data.name,
       originalName: data.originalName,
       duration: data.duration,
-      posterImage: "blaAndBla",
       genreNames: data.genres,
+      poster: file,
     };
-    const result = await createMovie(newMovie);
+
+    const result: CreateMovieResponse = await createMovie(newMovie);
+
+    // TODO: fix navigation to lead to the same url from both places
     navigate(`${result.movie_id}/create-screening`);
   };
 
@@ -94,6 +99,7 @@ const CreateMoviePage = () => {
         ) : (
           <>
             <label>Genre Selection:</label>
+            {genres}
             <select
               className={style.minimal}
               multiple
@@ -109,7 +115,9 @@ const CreateMoviePage = () => {
             {errors.genres && <p>Please select at least one genre</p>}
           </>
         )}
-
+        <div>
+          <ImageUpload onImageSelect={(file) => setFile(file)} />
+        </div>
         <input type="submit" />
       </form>
     </div>

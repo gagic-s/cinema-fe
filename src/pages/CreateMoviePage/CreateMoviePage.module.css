@@ -68,11 +68,13 @@
     font-size: 16px;
     font-weight: 100;
     letter-spacing: 10px;
+    font-family: "Electrolize", serif;
   }
 
   button[type="submit"]:hover,
   input[type="submit"]:hover {
     background: rgb(236, 39, 39);
+    color: #fff;
   }
 
   button[type="submit"]:active,
