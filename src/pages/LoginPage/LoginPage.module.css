@@ -1,0 +1,56 @@
+.loginFormContainer {
+  padding: 20px;
+  max-width: 600px;
+  color: #fff;
+
+  
+  @media (max-width: 768px) {
+    .loginFormContainer {
+      min-height: 80vh;
+    }
+  }
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h2{
+    margin-bottom: 50px;
+  }
+
+  h3{
+    margin-top: 3em;
+  }
+
+  button[type="submit"] {
+    background: #333;
+    color: #fff;
+width: 95%;
+    border: none;
+    margin-top: 40px;
+    padding: 15px;
+    padding-left: 30px;
+    font-size: 16px;
+    font-weight: 100;
+    letter-spacing: 10px;
+    font-family: "Electrolize", serif;
+
+  }
+
+  button[type="submit"]:hover,
+  input[type="submit"]:hover {
+    background: #777;
+    color: #fff;
+  }
+
+  button[type="submit"]:active,
+  input[type="button"]:active,
+  input[type="submit"]:active {
+    transition: 0.3s all;
+    transform: translateY(3px);
+    border: 1px solid transparent;
+    opacity: 0.8;
+  }
+
+}

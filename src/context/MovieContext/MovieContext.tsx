@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { GetAllMoviesResponse } from "../types/Movie";
-import { getAllMovies } from "../services/movies/movie-service";
+import { GetAllMoviesResponse } from "../../types/Movie";
+import { getAllMovies } from "../../services/movies/movie-service";
+
 
 interface MovieContextType {
   movies: GetAllMoviesResponse[];

@@ -26,9 +26,14 @@ export const getAllMovies = async (
 export const createMovie = async (
   newMovie: CreateMovieRequest
 ): Promise<CreateMovieResponse> => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.error("No token found");
+  }
   try {
     const response = await axiosInstance.post("/movies", newMovie, {
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` },
     });
     return response.data;
   } catch (error) {

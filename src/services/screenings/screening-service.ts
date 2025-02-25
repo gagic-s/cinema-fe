@@ -28,3 +28,17 @@ export const createScreening = async (
     throw error;
   }
 };
+
+export const deleteScreening = async (
+  id: string
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> => {
+  try {
+    const response = await axiosInstance.delete(`/screenings/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting screening:", error);
+    throw error;
+  }
+};
+

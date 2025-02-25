@@ -1,10 +1,9 @@
 .formContainer {
   padding: 20px;
-  box-shadow: 4px 4px 4px 4px rgba(0.1, 0.1, 0.1, 0.1);
-  border-radius: 8px;
   max-width: 600px;
   min-height: 600px;
   margin: 20px auto;
+  color: #fff;
 
   p {
     color: rgb(236, 39, 39);
@@ -34,7 +33,9 @@
     border-color: #ccc;
     font: inherit;
     line-height: 1.5em;
-    padding: 0.5em 3.5em 0.5em 1em;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    color: #fff;
+    background-color: #333;
 
     /* reset */
 
@@ -47,6 +48,7 @@
     -moz-appearance: none;
   }
 
+
   label {
     line-height: 2;
     text-align: left;
@@ -57,24 +59,26 @@
     font-weight: 200;
   }
 
+  button[type="submit"]:hover,
+  input[type="submit"]:hover {
+    background: #777;
+    color: #fff;
+  }
+
   button[type="submit"],
-  input[type="submit"] input[type="submit"] {
+  input[type="button"],
+  input[type="submit"]{
     background: #333;
     color: #fff;
-    text-transform: uppercase;
+    width: 100%;
     border: none;
     margin-top: 40px;
-    padding: 20px;
+    padding: 15px;
+    padding-left: 30px;
     font-size: 16px;
     font-weight: 100;
     letter-spacing: 10px;
     font-family: "Electrolize", serif;
-  }
-
-  button[type="submit"]:hover,
-  input[type="submit"]:hover {
-    background: rgb(236, 39, 39);
-    color: #fff;
   }
 
   button[type="submit"]:active,
@@ -84,6 +88,7 @@
     transform: translateY(3px);
     border: 1px solid transparent;
     opacity: 0.8;
+    
   }
 
   input:disabled {
@@ -98,58 +103,32 @@
   input[type="button"],
   input[type="submit"] {
     -webkit-appearance: none;
-  }
-
-  .App {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  button[type="button"] {
-    display: block;
-    appearance: none;
-    background: #333;
-    color: white;
-    border: none;
-    text-transform: uppercase;
-    padding: 10px 20px;
-    border-radius: 4px;
-  }
-
-  hr {
-    margin-top: 30px;
-  }
-
-  button {
-    display: block;
-    appearance: none;
-    margin-top: 40px;
-    border: 1px solid #333;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    padding: 10px 20px;
-    border-radius: 4px;
+    font-family: "Electrolize", serif;
   }
 }
 
-.minimal {
-  background-image: linear-gradient(45deg, transparent 50%, gray 50%),
-    linear-gradient(135deg, gray 50%, transparent 50%),
-    linear-gradient(to right, #ccc, #ccc);
-  background-position: calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
-  background-size: 5px 5px, 5px 5px, 1px 1.5em;
-  background-repeat: no-repeat;
+
+
+.genreTile {
+  margin: 0.5em;
+  padding: 5px 1em;
+  font-size: small;
+  border-radius: 5px;
+  border: 1px solid rgb(194, 193, 193);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  background-color: #111;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
-.minimal:focus {
-  background-image: linear-gradient(45deg, green 50%, transparent 50%),
-    linear-gradient(135deg, transparent 50%, green 50%),
-    linear-gradient(to right, #ccc, #ccc);
-  background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em,
-    calc(100% - 2.5em) 0.5em;
-  background-size: 5px 5px, 5px 5px, 1px 1.5em;
-  background-repeat: no-repeat;
-  border-color: green;
-  outline: 0;
+.genreTile:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2);
+  background-color: #222;
 }
+
+.selectedGenres{
+margin: 2em;
+}
+
+

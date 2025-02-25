@@ -4,15 +4,24 @@
   align-items: center;
   gap: 10px;
   margin: 20px 0;
-  width: 900px;
+  max-width: 400px;
+  flex-grow: 1; /* Make SearchBar take up more space */
+
 }
 
 .searchInput {
   padding: 8px;
   font-size: 16px;
   width: 550px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 8px;
+
+
+}
+
+.searchInput ::placeholder{
+  color: #fff;
 }
 
 .searchButton {

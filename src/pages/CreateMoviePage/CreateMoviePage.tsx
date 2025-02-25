@@ -7,6 +7,7 @@ import { createMovie } from "../../services/movies/movie-service";
 import Genre from "../../types/Genre";
 import { CreateMovieRequest, CreateMovieResponse } from "../../types/Movie";
 import style from "./CreateMoviePage.module.css";
+import Button from "../../components/shared/Button/Button";
 
 type FormValues = {
   name: string;
@@ -17,6 +18,7 @@ type FormValues = {
 
 const CreateMoviePage = () => {
   const [genres, setGenres] = useState<string[]>([]);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -25,7 +27,6 @@ const CreateMoviePage = () => {
     register,
     handleSubmit,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
@@ -53,14 +54,17 @@ const CreateMoviePage = () => {
     getGenres();
   }, []);
 
-  // TODO: fix multiselect
-  // Handle multiple selections
   const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOptions: string[] = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
-    setValue("genres", selectedOptions);
+    const selectedValue = event.target.value;
+
+    setSelectedGenres((prevGenres) => {
+      const updatedGenres = prevGenres.includes(selectedValue)
+        ? prevGenres.filter((genre) => genre !== selectedValue)
+        : [...prevGenres, selectedValue];
+  
+      setValue("genres", updatedGenres); // ✅ Correctly updates form state
+      return updatedGenres;
+    });
   };
 
   const onSubmit = async (data: FormValues) => {
@@ -71,56 +75,63 @@ const CreateMoviePage = () => {
       genreNames: data.genres,
       poster: file,
     };
-
     const result: CreateMovieResponse = await createMovie(newMovie);
 
-    // TODO: fix navigation to lead to the same url from both places
-    navigate(`${result.movie_id}/create-screening`);
+    navigate(`../${result.movie_id}/create-screening`);
   };
 
   return (
-    <div className={style.formContainer}>
-      <h2>Create Movie Page</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Movie Name</label>
-        <input {...register("name", { required: true, maxLength: 10 })} />
-        {errors.name && <p>This field is required</p>}
+    <><div>
+      <Button variant="tertiary" text="< Back" onClick={() => window.history.back()} />
+    </div><div className={style.formContainer}>
+        <h2>Create Movie Page</h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <label>Movie Name</label>
+          <input {...register("name", { required: true, maxLength: 50 })} />
+          {errors.name && <p>This field is required</p>}
 
-        <label>Original Movie Name</label>
-        <input
-          {...register("originalName", { required: true, maxLength: 10 })}
-        />
-        {errors.originalName && <p>This field is required</p>}
+          <label>Original Movie Name</label>
+          <input
+            {...register("originalName", { required: true, maxLength: 50 })} />
+          {errors.originalName && <p>This field is required</p>}
 
-        <label>Movie Duration</label>
-        <input {...register("duration")} defaultValue="test" />
-        {loading ? (
-          <div>Loading ... </div>
-        ) : (
-          <>
-            <label>Genre Selection:</label>
-            {genres}
-            <select
-              className={style.minimal}
-              multiple
-              value={getValues("genres")}
-              onChange={handleGenreChange}
-            >
-              {genres.map((genre) => (
-                <option key={genre} value={genre}>
-                  {genre}
-                </option>
-              ))}
-            </select>
-            {errors.genres && <p>Please select at least one genre</p>}
-          </>
-        )}
-        <div>
-          <ImageUpload onImageSelect={(file) => setFile(file)} />
-        </div>
-        <input type="submit" />
-      </form>
-    </div>
+          <label>Movie Duration</label>
+          <input {...register("duration", { valueAsNumber: true })} defaultValue="" />
+          {loading ? (
+            <div>Loading ... </div>
+          ) : (
+            <>
+              <label>Genre Selection:</label>
+              <select
+                className={style.minimal}
+                multiple
+                value={selectedGenres}
+                onChange={handleGenreChange}
+              >
+                {genres.map((genre) => (
+                  <option key={genre} value={genre}>
+                    {genre}
+                  </option>
+                ))}
+              </select>
+              {errors.genres && <p>Please select at least one genre</p>}
+
+              <div className={style.selectedGenres}>Selected Genres: {selectedGenres.map(genre => (
+
+                <strong className={style.genreTile} key={genre}>{genre} </strong>
+
+
+
+
+              ))}</div>
+            </>
+          )}
+          <div>
+            <ImageUpload onImageSelect={(file) => setFile(file)} />
+          </div>
+          <input type="submit" />
+        </form>
+      </div></>
   );
 };
 

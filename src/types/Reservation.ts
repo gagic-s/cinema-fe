@@ -29,3 +29,15 @@ export type CreateReservationResponse = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type Reservation = {
+  reservation_id: string;
+  reservationCode: string;
+  email: string;
+  totalPrice: "1800.00";
+  screening_id: string;
+  user_id: null;
+  createdAt: string;
+  updatedAt: string;
+  Tickets: TicketResponse[];
+}

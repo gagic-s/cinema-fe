@@ -1,4 +1,4 @@
-import { format, setHours, setMinutes, setSeconds } from "date-fns";
+import { format} from "date-fns";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -39,12 +39,13 @@ const CreateScreeningPage = () => {
     },
   });
 
+  
+
   const onSubmit = async (data: ScreeningFormValues) => {
     const date = format(new Date(data.screeningDate!), "yyyy-MM-dd");
-    let time = new Date(data.screeningTime!);
-    time = setSeconds(setMinutes(setHours(time, 15), 0), 0);
+    const time = new Date(data.screeningTime!);
     const formattedTime = format(time, "HH:mm:ss");
-
+    console.log("values", data);
     if (id) {
       const newScreening: AddScreeningRequest = {
         movie_id: id,

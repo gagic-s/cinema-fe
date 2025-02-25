@@ -42,5 +42,5 @@ export type GetAllMoviesResponse = {
   posterImage: string;
   updatedAt: string;
   screenings: Screening[];
-  genres: Genre[];
+  genres: [];
 };

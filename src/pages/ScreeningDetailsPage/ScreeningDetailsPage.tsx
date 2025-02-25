@@ -1,17 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+ 
+import { useContext, useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import image from "../../assets/movie.jpg";
 import SeatChart from "../../components/screening/SeatChart/SeatChart";
 import Button from "../../components/shared/Button/Button";
 import Modal from "../../components/shared/Modal/Modal";
+import { AuthContext } from "../../context/AuthContext/AuthContext";
 import { createReservation } from "../../services/reservation/reservation-service";
-import { getOneScreening } from "../../services/screenings/screening-service";
+import { deleteScreening, getOneScreening } from "../../services/screenings/screening-service";
 import { GetOneScreeningResponse } from "../../types/Screenings";
 import { dateFormatter } from "../../util/dateTimeFormatter";
 import styles from "./ScreeningDetails.module.css";
 
 type SeatStatus = "available" | "taken" | "selected";
+
 const ScreeningDetailsPage = () => {
   const { id } = useParams();
   const [screening, setScreening] = useState<GetOneScreeningResponse>();
@@ -21,7 +23,9 @@ const ScreeningDetailsPage = () => {
   const [selectedSeats, setSelectedSeats] = useState<Set<string>>(new Set());
   const takenSeats = new Set(screening?.tickets || []);
 
-  const userEmail = "user@gmail.com"; //TODO: update when user service available
+  const navigate = useNavigate();
+
+   const auth = useContext(AuthContext);
 
   const getScreenings = async () => {
     setLoading(true);
@@ -82,21 +86,31 @@ const ScreeningDetailsPage = () => {
 
     const newReservation = {
       screening_id: screening?.screening_id,
-      email: userEmail,
+      email: auth?.user?.email || "",
       totalPrice: totalPrice,
       ticketsData: ticketsArray,
     };
+
+    
     console.log(newReservation);
     createReservation(newReservation);
   };
 
   const handleConfirm = () => {
+    handleBuyClick()
     setModalOpen(false);
   };
 
   const handleCancel = () => {
     setModalOpen(false);
   };
+
+  const handleRemoveScreening = () => {
+    if (!screening?.screening_id) return;
+    deleteScreening(screening?.screening_id || "");
+    navigate("/");
+  }
+
 
   const modalContentConfirm = (
     <p>
@@ -129,47 +143,53 @@ const ScreeningDetailsPage = () => {
   if (loading) return <div className={styles.container}>Loading</div>;
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>
-        {screening?.movie?.name} -
-        {screening ? dateFormatter(screening.screeningDate) : ""} -
-        <strong>{screening ? screening.screeningTime.slice(0, 5) : ""}</strong>
-      </h2>
+    <div className={styles.containerWrap}><div>
+      <Button variant="tertiary" text="< Back" onClick={() => window.history.back()} />
+    </div><div className={styles.container}>
 
-      <div className={styles.content}>
-        <div className={styles.leftSection}>
-          <img
-            className={styles.poster}
-            src={image}
-            alt={`Poster for ${screening?.movie?.name}`}
-          />
+        <h2 className={styles.title}>
+          {screening?.movie?.name} - 
+          {screening ? dateFormatter(screening.screeningDate) : ""} -
+          <strong>{screening ? screening.screeningTime.slice(0, 5) : ""}</strong>
+        </h2>
+
+        <div className={styles.content}>
+          <div className={styles.leftSection}>
+            <img
+              className={styles.poster}
+              src={screening?.movie?.posterImage || image}
+              alt={`Poster for ${screening?.movie?.name}`} />
+          </div>
+          <div className={styles.rightSection}>
+            {screening?.screeningRows &&
+              screening?.screeningColumns &&
+              screening.ticketPrice && (
+                <SeatChart
+                  rows={screening.screeningRows}
+                  cols={screening.screeningColumns}
+                  getSeatStatus={getSeatStatus}
+                  toggleSeat={toggleSeat} />
+              )}
+          </div>
         </div>
-        <div className={styles.rightSection}>
-          {screening?.screeningRows &&
-            screening?.screeningColumns &&
-            screening.ticketPrice && (
-              <SeatChart
-                rows={screening.screeningRows}
-                cols={screening.screeningColumns}
-                getSeatStatus={getSeatStatus}
-                toggleSeat={toggleSeat}
-              />
-            )}
+        <div className={styles.purchaseContainer}>
+        Total price: <strong>{totalPrice} RSD</strong>
+          <Button onClick={() => setModalOpen(true)} text="Buy" />
         </div>
-      </div>
-      <div className={styles.purchaseContainer}>
-        <strong>Total price: {totalPrice} RSD</strong>
-        <Button onClick={handleBuyClick} text="Buy" />
-      </div>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
-        title="Confirm Ticket Purchase"
-        onCancel={handleCancel}
-        onConfirm={handleConfirm}
-      >
-        {selectedSeats.size ? modalContentConfirm : modalContentError}
-      </Modal>
+
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+          title="Confirm Ticket Purchase"
+          onCancel={handleCancel}
+          onConfirm={handleConfirm}
+        >
+          {selectedSeats.size ? modalContentConfirm : modalContentError}
+        </Modal>
+      </div>        
+        {auth?.user?.isAdmin && <div  className={styles.removeScreeningWrap}>
+          <Button variant="tertiary" text="X Remove Screening" onClick={handleRemoveScreening} />
+         </div>}
     </div>
   );
 };

@@ -14,16 +14,19 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   return (
     <div className={styles.movieCardContainer}>
       <div className={styles.poster}>
-        <img src={movie.posterImage} alt={movie.name} />
+        <img src={movie.posterImage} alt={movie.originalName} />
       </div>
 
-      <h2>{movie.name}</h2>
+      <h2>{movie.originalName}</h2>
+      <div className={styles.genresContainer}>
       {movie.genres.length > 0 &&
         movie.genres.map((genre) => (
-          <strong className={styles.genreTile} key={genre.name}>
-            {genre.name}
+          <strong className={styles.genreTile} key={genre}>
+            {genre}
           </strong>
         ))}
+
+      </div>
 
       {movie.screenings && movie.screenings.length > 0 ? (
         <ul>
