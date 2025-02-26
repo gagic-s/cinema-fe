@@ -27,6 +27,7 @@ const Admin = () => {
          <div className={styles.reservationContainer}>
          <p>Reservation code: {reservation.reservationCode}</p>
          <p>Screening id: {reservation.screening_id}</p>
+         <p>Customer email: {reservation.email}</p>
          <p>Total price: {reservation.totalPrice}</p>
          <p>{reservation.Tickets.map(ticket => (
           <div>Seat: {ticket.ticket_row}/{ticket.ticket_column}</div>

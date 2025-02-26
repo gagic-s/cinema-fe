@@ -148,9 +148,9 @@ const ScreeningDetailsPage = () => {
     </div><div className={styles.container}>
 
         <h2 className={styles.title}>
-          {screening?.movie?.name} - 
-          {screening ? dateFormatter(screening.screeningDate) : ""} -
-          <strong>{screening ? screening.screeningTime.slice(0, 5) : ""}</strong>
+          {screening?.movie?.name} -
+           {screening ? dateFormatter(screening.screeningDate) : ""} - 
+          <strong> {screening ? screening.screeningTime.slice(0, 5) : ""}</strong>
         </h2>
 
         <div className={styles.content}>

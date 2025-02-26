@@ -1,5 +1,9 @@
 .adminContainer{
   color: #fff;
+  h2{
+    text-align: left;
+    margin-left: 1em;
+  }
 
 }
 .reservationContainer {
@@ -15,6 +19,10 @@
   background-color: #111;
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
+
+  p{
+    margin: 0;
+  }
 
 }
 

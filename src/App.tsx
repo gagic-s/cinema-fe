@@ -17,6 +17,7 @@ import Login from "./pages/LoginPage/LoginPage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Admin from "./pages/AdminPage/AdminPage";
 import Register from "./pages/RegisterPage/RegisterPage";
+import VerifyEmail from "./pages/EmailVerificationPage/EmailVerificationPage";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/contact" element={<ContactUsPage />} />
                 <Route path="/terms" element={<TermsOfService />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/verify-email" element={<VerifyEmail />} />
                
                 {/* Protected Routes for Regular Users */}
                 <Route element={<ProtectedRoute />}>
